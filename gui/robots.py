@@ -9,12 +9,14 @@ ri = 0.25   # roller radius
 #
 # def processRectangle()
 
-def processing(v_d, theta_d, theta_new):         #20 ms readings
+def processing(v_d, theta_d):         #20 ms readings
 
-    print "cos", round(np.cos(theta_d - theta_new),2)
-    v_cx = v_d * np.cos(theta_d - theta_new)
+    print theta_d
+    v_cx = v_d * np.cos(theta_d)
 
-    v_cy = v_d * np.sin(theta_d - theta_new)
+    v_cy = v_d * np.sin(theta_d + np.pi)
+
+    # print v_cy
 
 
     # wheelRotationalVelocity(v_cx, v_cy, omega)
