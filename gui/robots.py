@@ -1,14 +1,5 @@
 import numpy as np
 
-# global variables
-theta = 0
-omega_d = 1  # assuming a constant
-
-psi_1 = 0
-psi_2 = 0
-psi_3 = 0
-psi_4 = 0
-
 #constants TODO: look at these measurments more closely
 L = 4
 H = 2
@@ -18,19 +9,20 @@ ri = 0.25   # roller radius
 #
 # def processRectangle()
 
-def processing(v_d, theta_d, delta_t = 20):         #20 ms readings
+def processing(v_d, theta_d, theta_new):         #20 ms readings
 
-    delta_theta =  omega_d * delta_t
+    # print "cos", np.cos(np.radians(theta_d - theta_new))
+    # print "vd", v_d
+    v_cx = v_d * round(np.cos(np.radians(theta_d - theta_new)),2)
 
-    theta_new = theta + delta_theta
+    v_cy = v_d * round(np.sin(np.radians(theta_d - theta_new)), 2)
 
-    v_cx = v_d * np.cos(theta_d - (theta_new + delta_theta))
 
-    v_cy = v_d * np.sin(theta_d - (theta_new + delta_theta))
+    # wheelRotationalVelocity(v_cx, v_cy, omega)
 
-    omega = delta_theta/delta_t
+    # print "V_Cx", v_cx
 
-    wheelRotationalVelocity(v_cx, v_cy, omega)
+    return v_cx, v_cy
 
 def wheelRotationalVelocity (vx, vy, theta):
 
