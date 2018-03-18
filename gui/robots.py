@@ -11,11 +11,11 @@ ri = 0.25   # roller radius
 
 def processing(v_d, theta_d, theta_new):         #20 ms readings
 
-    # print "cos", np.cos(np.radians(theta_d - theta_new))
+    print "cos", round(np.cos(theta_d - theta_new),2)
     # print "vd", v_d
-    v_cx = v_d * round(np.cos(np.radians(theta_d - theta_new)),2)
+    v_cx = v_d * round(np.cos(theta_d - theta_new),2)
 
-    v_cy = v_d * round(np.sin(np.radians(theta_d - theta_new)), 2)
+    v_cy = v_d * round(np.sin(theta_d - theta_new), 2)
 
 
     # wheelRotationalVelocity(v_cx, v_cy, omega)
@@ -48,7 +48,7 @@ def wheelRotationalVelocity (vx, vy, theta):
 
     psi = (1/R) * np.dot(inverse_kinematic, state_matrix)       # find the velocities of each of the wheels
 
-    print psi
+    # print psi
 
 
 wheelRotationalVelocity(4,5,0)

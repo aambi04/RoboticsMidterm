@@ -1,7 +1,7 @@
 from Tkinter import *
 from robots import *
 import math
-
+from copy import *
 # constants
 PI = math.pi
 
@@ -43,13 +43,11 @@ Y_CENTER = HEIGHT/2     # starting point for robot
 x1 = NORM
 x2 = WIDTH
 omega = 0
-count = 0
 for k in range(NORM, HEIGHT + NORM, 12):
     y1 = k
     y2 = k
     canvas.create_line(x1, y1, x2, y2)
-    count += 1
-print "COUNT", count
+
 # draw vertical lines
 y1 = NORM
 y2 = HEIGHT
@@ -62,16 +60,20 @@ for k in range(NORM, WIDTH + NORM, 12):
 class Vehicle:
     def __init__(self, active):
         self.shape = canvas.create_rectangle(WIDTH/2 - 26, HEIGHT/2 + 52, WIDTH/2 + 26, HEIGHT/2 - 52, fill=color)       # robot is 4.33 ft long, 2.17 ft wide
-        self.speedx = 1 # changed from 3 to 9
-        self.speedy = 1 # changed from 3 to 9
+        self.speedx = 1
+        self.speedy = 1
         self.headingAngle = 0  # heading angle
         self.ref_point = [WIDTH + 26, HEIGHT + 52]
         self.active = active
         self.dist = [0, 0]
         self.relative = [X_CENTER, Y_CENTER]
         self.vd = 2
-        self.rect = [0,0,0]         # length, width, height
+        self.rect = [0,0,0]         # length, width, inclincation theta
+        self.circle = [0,0]
         self.resetdist = [0, 0]
+
+    def setActive(self, active):
+        self.active = active
 
     def getRefPoint(self):
         return self.ref_point
@@ -84,29 +86,34 @@ class Vehicle:
         canvas.delete(self.shape)
         self.active = False
         self.shape = canvas.create_rectangle(WIDTH/2 - 26, HEIGHT/2 + 52, WIDTH/2 + 26, HEIGHT/2 - 52, fill=color)       # robot is 4.33 ft long, 2.17 ft wide
-        self.speedx = 1 # changed from 3 to 9
-        self.speedy = 1 # changed from 3 to 9
+        self.speedx = 1
+        self.speedy = 1
         self.headingAngle = 0  # heading angle
         self.ref_point = [WIDTH + 26, HEIGHT + 52]
         self.dist = [0, 0]
         self.relative = [X_CENTER, Y_CENTER]
         self.vd = 2
-        self.rect = [0,0,0]         # length, width, height
+        self.rect = [0,0,0]         # length, width, inclination theta
+        self.circle = [0,0]
         self.resetdist = [0, 0]
+        # self.move_activeRect()
 
     def move_activeRect(self):
         if self.active:
             self.vehicle_updateRectangle()
-            rightFrame.after(10, self.move_activeRect) # time in terms of miliseconds
+            canvas.after(10, self.move_activeRect) # time in terms of miliseconds
 
     def vehicle_updateRectangle(self):
-        print "speedx", self.speedx, self.speedy
-        canvas.move(self.shape, self.speedx, self.speedy)
+        delta_x = int(round(self.speedx))
+        delta_y = int(round(self.speedy))
+        # print "speedx", delta_x, delta_y
+        canvas.move(self.shape, delta_x , delta_y)
         pos = canvas.coords(self.shape)                     #get the coordinates of the vehicle
         self.ref_point = [(pos[0] + pos[2])/2, (pos[1] + pos[3])/2]
 
         print "ref point", self.ref_point[0], self.ref_point[1]
         print "relative", self.relative[0], self.relative[1]
+        print "self.resetdist", self.resetdist[0], self.resetdist[1]
 
         # how much the vehicle has traveled in the x and y direction
         self.dist[0] = self.resetdist[0] + math.fabs(self.ref_point[0] - self.relative[0])
@@ -115,36 +122,44 @@ class Vehicle:
         width = self.rect[0]
         #
         print width, length
-        print "dist"
-        print self.dist[0], self.dist[1]
-        #top left conrner
-        if (self.dist[1] >= length and self.dist[0] == 0) or (self.dist[1] == 0 and self.dist[0] >= width):
-            thetaD = self.headingAngle - 90          # move along the x axis
+        print "dist", self.dist[0], self.dist[1]
+        print "rect, ", self.rect
+        sin_angle = math.fabs(round(np.sin(math.fabs(self.headingAngle - self.rect[2])), 2))
+        print "angle", sin_angle
+        if (self.dist[1] >= length and sin_angle == 1) or (self.dist[0] >= width and sin_angle == 0):
+            thetaD = self.headingAngle - (PI/2.0)          # move along the x axis
             self.speedx, self.speedy = processing(self.vd, thetaD, 0)
             self.relative = [self.ref_point[0], self.ref_point[1]]
             self.dist = [0,0]
             self.resetdist = [0,0]
-            self.headingAngle = thetaD
+            self.headingAngle = deepcopy(thetaD)
             print "CHANGE"
             print self.speedx, self.speedy
             print self.relative[0], self.relative[1]
         elif self.ref_point[0] >= WIDTH - THREEFEET or self.ref_point[0] <= THREEFEET or self.ref_point[1] >= HEIGHT - THREEFEET or self.ref_point[1] <= THREEFEET:        # reset and put image in the center of the screen
             canvas.delete(self.shape)
             self.shape = canvas.create_rectangle(WIDTH/2 - 26, HEIGHT/2 + 52, WIDTH/2 + 26, HEIGHT/2 - 52, fill=color)
-            self.resetdist = self.dist
+            self.resetdist = deepcopy(self.dist)
             self.relative = [X_CENTER, Y_CENTER]
+            print "RESTART"
 
 
     #start forward so initial thetaD will equal 90 degrees
 
-    def moveRectangle(self, length, width, inclin = 0):
-        thetaD = 90
+    def moveRectangle(self, length, width, incline = 0):
+        thetaD = (PI/2.0) + incline
         theta_new = self.headingAngle
-        self.rect = (feettoPixels(width), feettoPixels(length), inclin)
+        self.rect = [feettoPixels(width), feettoPixels(length), incline]
         self.speedx, self.speedy = processing(self.vd, thetaD, theta_new)
         self.headingAngle = thetaD
-        print self.speedx, self.speedy
-        self.activateRect(True)
+        self.activateRect(self.active)
+
+    def moveCircle(self, radi, incline = 0):
+        thetaD = (85.0 * PI)/180.0
+        theta_new = self.headingAngle
+        self.circle = [radi, incline]
+        self.speedx, self.speedy = processing(self.vd, thetaD, theta_new)
+        self.headingAngle = thetaD
 
 
 
@@ -173,28 +188,15 @@ inclin.insert(5.5, "inclination, thetap (radians): ")
 inclinInp = Entry(leftFrame, width=10)
 inclinInp.grid(row=2, column=1)
 
-#draw path of the circle and start the vehicle
-
 def circleCallback():
     radiAns = radiInp.get()
     inclinAns = inclinInp.get()
 
     radi = feettoPixels(radiAns)
 
-    print "radi,", radi
+    incline = np.radians(inclinAns)         # TODO: remove this before submitting
 
-    x_0 = robot.getRefPoint()[0]
-    y_0 = int(robot.getRefPoint()[1]) + radi
-
-    x_1 = int(robot.getRefPoint()[0]) + (radi * 2)
-    y_1 = int(robot.getRefPoint()[1]) - radi
-
-    print x_0, y_0, x_1, y_1
-
-    robot.activate(True)
-    robot.circlePath(x_0, y_0, x_1, y_1)
-
-    # rightFrame.update()
+    robot.moveCircle(radi, incline)
 
 
 circleSubmit = Button(leftFrame, text="submit", width=10, command=circleCallback)
@@ -227,9 +229,12 @@ inclinInpRec.grid(row=8, column=1)
 def rectangleCallback():
     lengthAns = lengthInp.get()
     widthAns = widthInp.get()
-    thetaAns = inclinInp.get()
+    thetaAns = inclinInpRec.get() if inclinInpRec.get() != '' else 0
 
-    robot.moveRectangle(lengthAns, widthAns, thetaAns)
+    theta = np.radians(float(thetaAns))         # TODO: remove this before submitting
+
+    robot.setActive(True)
+    robot.moveRectangle(lengthAns, widthAns, theta)
 
 
 
