@@ -12,15 +12,12 @@ ri = 0.25   # roller radius
 def processing(v_d, theta_d, theta_new):         #20 ms readings
 
     print "cos", round(np.cos(theta_d - theta_new),2)
-    # print "vd", v_d
-    v_cx = v_d * round(np.cos(theta_d - theta_new),2)
+    v_cx = v_d * np.cos(theta_d - theta_new)
 
-    v_cy = v_d * round(np.sin(theta_d - theta_new), 2)
+    v_cy = v_d * np.sin(theta_d - theta_new)
 
 
     # wheelRotationalVelocity(v_cx, v_cy, omega)
-
-    # print "V_Cx", v_cx
 
     return v_cx, v_cy
 
