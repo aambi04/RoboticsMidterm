@@ -11,7 +11,7 @@ ri = 0.25   # roller radius
 
 def processing(v_d, theta_d):         #20 ms readings
 
-    print theta_d
+    print "theta_d", theta_d
     v_cx = v_d * np.cos(theta_d)
 
     v_cy = v_d * np.sin(theta_d + np.pi)

@@ -2,6 +2,8 @@ from Tkinter import *
 from robots import *
 import math
 from copy import *
+import tkMessageBox
+
 # constants
 PI = math.pi
 
@@ -22,7 +24,6 @@ rightFrame = Frame(root, width=1000, height=1000, bg="black")
 rightFrame.grid(row=0, column=1)
 leftFrame = Frame(root, width=300, height=800)
 leftFrame.grid(row=0, column=0)
-
 
 
 #Right Frame with animation of car moving
@@ -260,6 +261,46 @@ class Vehicle:
         self.headingAngle = thetaD
         self.move_activeFigure()
 
+############ POINT EXECUTION ##########################################
+    def move_activePoint(self):
+        if self.active:
+            self.vehicle_updatePoints()
+            canvas.after(10, self.move_activePoint)
+
+    def vehicle_updatePoints(self):
+        delta_x = int(round(self.speedx))
+        delta_y = int(round(self.speedy))
+        # print "speedx", delta_x, delta_y
+        canvas.move(self.shape, delta_x , delta_y)
+        pos = canvas.coords(self.shape)                     #get the coordinates of the vehicle
+        self.ref_point = [(pos[0] + pos[2])/2, (pos[1] + pos[3])/2]
+
+        # how much the vehicle has traveled in the x and y direction
+        normx = self.resetdist[0] + math.fabs(self.ref_point[0] - self.relative[0])
+        normy = self.resetdist[1] + math.fabs(self.ref_point[1] - self.relative[1])
+
+
+        if normx >= self.dist[0] and normy >= self.dist[1]:
+            self.active = False
+        elif self.ref_point[0] >= WIDTH - THREEFEET or self.ref_point[0] <= THREEFEET or self.ref_point[1] >= HEIGHT - THREEFEET or self.ref_point[1] <= THREEFEET:        # reset and put image in the center of the screen
+            canvas.delete(self.shape)
+            self.shape = canvas.create_rectangle(WIDTH/2 - 26, HEIGHT/2 + 52, WIDTH/2 + 26, HEIGHT/2 - 52, fill=color)
+            self.resetdist = deepcopy([normx, normy])
+
+    def movePoints(self, x, y):
+        end_x = feettoPixels(float(math.fabs(x)))
+        end_y = feettoPixels(float(math.fabs(y)))
+        self.resetdist = [0,0]
+        self.dist[0] = end_x
+        self.dist[1] = end_y
+        thetaD = np.arctan(float(y) / float(x))
+        print "x and y ", x, y
+
+        if (x < 0 and y < 0) or (x < 0 and y > 0):
+            print "x and y ", x, y
+            thetaD += np.pi
+        self.speedx, self.speedy = processing(self.vd, thetaD)
+        self.move_activePoint()
 
 
 # Left frame with controls and inputs
@@ -388,75 +429,173 @@ def figureCallback():
     robot.moveFigure(topRadi, bottomRadi, inclineTop, inclineBottom)
 
 
-rectangleSubmit = Button(leftFrame, text="submit", width=10, command=figureCallback)
-rectangleSubmit.grid(row=15, column = 1, sticky = W)
+figSubmit = Button(leftFrame, text="submit", width=10, command=figureCallback)
+figSubmit.grid(row=15, column = 1, sticky = W)
+
+
+#Execution Paths
+
+endPoints = Text(leftFrame, width=20, height=1, takefocus=0)
+endPoints.grid(row=16, column=0, sticky=W)
+endPoints.insert(5.5, "Point Execution:")
+
+x_f = Text(leftFrame, width=50, height=1, takefocus=0)
+x_f.grid(row=17, column=0, sticky=W)
+x_f.insert(5.5, "Xf: ")
+x_fInp = Entry(leftFrame, width=10)
+x_fInp.grid(row=17, column=1)
+
+y_f = Text(leftFrame, width=50, height=1, takefocus=0)
+y_f.grid(row=18, column=0)
+y_f.insert(5.5, "Yf: ")
+y_fInp = Entry(leftFrame, width=10)
+y_fInp.grid(row=18, column=1)
+
+
+def pointCallback():
+    x_fAns = float(x_fInp.get()) if x_fInp.get() != '' else 0
+    y_fAns = float(y_fInp.get()) if y_fInp.get() != '' else 0
+
+
+    robot.setActive(True)
+    robot.movePoints(x_fAns, y_fAns)
+
+pointSubmit = Button(leftFrame, text="submit", width=10, command=pointCallback)
+pointSubmit.grid(row=19, column = 1, sticky = W)
+
+
+#Manual Inputs
+wheelRotation = Text(leftFrame, width=50, height=1, takefocus=0)
+wheelRotation.grid(row=20, column=0)
+wheelRotation.insert(5.5, "Wheels Rotation")
+
+wheel1 = Text(leftFrame, width=50, height=1, takefocus=0)
+wheel1.grid(row=21, column=0)
+wheel1.insert(5.5, "Top Left Wheel Rotational Rate (ft/sec): ")
+wheel1Inp = Entry(leftFrame, width=10)
+wheel1Inp.grid(row=21, column=1)
+
+wheel2 = Text(leftFrame, width=50, height=1, takefocus=0)
+wheel2.grid(row=22, column=0)
+wheel2.insert(5.5, "Top Right Wheel Rotational Rate (ft/sec): ")
+wheel2Inp = Entry(leftFrame, width=10)
+wheel2Inp.grid(row=22, column=1)
+
+wheel3 = Text(leftFrame, width=50, height=1, takefocus=0)
+wheel3.grid(row=23, column=0)
+wheel3.insert(5.5, "Bottom Left Wheel Rotational Rate (ft/sec): ")
+wheel3Inp = Entry(leftFrame, width=10)
+wheel3Inp.grid(row=23, column=1)
+
+wheel4 = Text(leftFrame, width=50, height=1, takefocus=0)
+wheel4.grid(row=24, column=0)
+wheel4.insert(5.5, "Bottom Right Wheel Rotational Rate (ft/sec): ")
+wheel4Inp = Entry(leftFrame, width=10)
+wheel4Inp.grid(row=24, column=1)
+
+thetaP = Text(leftFrame, width=50, height=1, takefocus=0)
+thetaP.grid(row=25, column=0)
+thetaP.insert(5.5, "Direction (thetaP in radians): ")
+thetaPInp = Entry(leftFrame, width=10)
+thetaPInp.grid(row=25, column=1)
+
+speed = Text(leftFrame, width=50, height=1, takefocus=0)
+speed.grid(row=26, column=0)
+speed.insert(5.5, "Velocity of vehicle (ft/sec & max:15ft/sec): ")
+speedInp = Entry(leftFrame, width=10)
+speedInp.grid(row=26, column=1)
+
+
+
+
+
+def wheelCallback():
+    wheel1Ans = wheel1Inp.get() if wheel1Inp.get() != '' else 0
+    wheel2Ans = wheel2Inp.get() if wheel2Inp.get() != '' else 0
+    wheel3Ans = wheel3Inp.get() if wheel3Inp.get() != '' else 0
+    wheel4Ans = wheel4Inp.get() if wheel4Inp.get() != '' else 0
+    thetaPAns = thetaPInp.get() if thetaPInp.get() != '' else 0
+    speedAns  = speedInp.get()  if speedInp.get() != ''  else 0
+
+
+    thetaPRads= np.radians(float(thetaPAns))         # TODO: remove this before submitting
+
+    robot.setActive(True)
+    robot.setVD(speedAns)
+
+
+wheelSubmit = Button(leftFrame, text="submit", width=10, command=wheelCallback)
+wheelSubmit.grid(row=27, column = 1, sticky = W)
+
+
+
 
 
 def resetCallback():
     robot.reset()
 
 reset = Button(leftFrame, text="RESET", width=10, command=resetCallback)
-reset.grid(row=15, column = 2)
-
-#Output Values
-
-
-positionx = Text(leftFrame, width=50, height=1, takefocus=0, bg="black", fg="white")
-positionx.grid(row=16, column=0)
-positionx.insert(5.5, "Vehicle Position X")
-positionLabelx = Label(leftFrame)
-positionLabelx.grid(row=16, column=1)
-ref_point = robot.getRefPoint()
-def getLabelX():
-    positionLabelx.config(text=robot.getRefPoint()[0])
-    positionLabelx.after(10, getLabelX)
-getLabelX()
-
-positiony = Text(leftFrame, width=50, height=1, takefocus=0, bg="black", fg="white")
-positiony.grid(row=17, column=0)
-positiony.insert(5.5, "Vehicle Position Y")
-positionLabely = Label(leftFrame)
-positionLabely.grid(row=17, column=1)
-def getLabelY():
-    positionLabely.config(text=robot.getRefPoint()[1])
-    positionLabely.after(10, getLabelY)
-getLabelY()
-
-wheel1 = Text(leftFrame, width=50, height=1, takefocus=0, bg="black", fg="white")
-wheel1.grid(row=19, column=0)
-wheel1.insert(5.5, "Top left Wheel Rotation Rate")
-wheel1Label = Label(leftFrame, text=wheelRotation[0])
-wheel1Label.grid(row=19, column=1)
-
-wheel2 = Text(leftFrame, width=50, height=1, takefocus=0, bg="black", fg="white")
-wheel2.grid(row=20, column=0)
-wheel2.insert(5.5, "Top Right Wheel Rotation Rate")
-wheel2Label = Label(leftFrame, text=wheelRotation[1])
-wheel2Label.grid(row=20, column=1)
-
-wheel3 = Text(leftFrame, width=50, height=1, takefocus=0, bg="black", fg="white")
-wheel3.grid(row=21, column=0)
-wheel3.insert(5.5, "Bottom Left Wheel Rotation Rate")
-wheel3Label = Label(leftFrame, text=wheelRotation[2])
-wheel3Label.grid(row=21, column=1)
-
-wheel4 = Text(leftFrame, width=50, height=1, takefocus=0, bg="black", fg="white")
-wheel4.grid(row=22, column=0)
-wheel4.insert(5.5, "Bottom Right Wheel Rotation Rate")
-wheel4Label = Label(leftFrame, text=wheelRotation[3])
-wheel4Label.grid(row=22, column=1)
-
-velocity_x = Text(leftFrame, width=50, height=1, takefocus=0, bg="black", fg="white")
-velocity_x.grid(row=24, column=0)
-velocity_x.insert(5.5, "Vehicle Velocity X")
-velocity_xLabel = Label(leftFrame, text=velocity[0])
-velocity_xLabel.grid(row=24, column=1)
-
-velocity_y = Text(leftFrame, width=50, height=1, takefocus=0, bg="black", fg="white")
-velocity_y.grid(row=25, column=0)
-velocity_y.insert(5.5, "Vehicle Velocity Y")
-velocity_yLabel = Label(leftFrame, text=velocity[1])
-velocity_yLabel.grid(row=25, column=1)
-
+reset.grid(row=28, column = 2)
+#
+# #Output Values
+#
+#
+# positionx = Text(leftFrame, width=50, height=1, takefocus=0, bg="black", fg="white")
+# positionx.grid(row=16, column=0)
+# positionx.insert(5.5, "Vehicle Position X")
+# positionLabelx = Label(leftFrame)
+# positionLabelx.grid(row=16, column=1)
+# ref_point = robot.getRefPoint()
+# def getLabelX():
+#     positionLabelx.config(text=robot.getRefPoint()[0])
+#     positionLabelx.after(10, getLabelX)
+# getLabelX()
+#
+# positiony = Text(leftFrame, width=50, height=1, takefocus=0, bg="black", fg="white")
+# positiony.grid(row=17, column=0)
+# positiony.insert(5.5, "Vehicle Position Y")
+# positionLabely = Label(leftFrame)
+# positionLabely.grid(row=17, column=1)
+# def getLabelY():
+#     positionLabely.config(text=robot.getRefPoint()[1])
+#     positionLabely.after(10, getLabelY)
+# getLabelY()
+#
+# wheel1 = Text(leftFrame, width=50, height=1, takefocus=0, bg="black", fg="white")
+# wheel1.grid(row=19, column=0)
+# wheel1.insert(5.5, "Top left Wheel Rotation Rate")
+# wheel1Label = Label(leftFrame, text=wheelRotation[0])
+# wheel1Label.grid(row=19, column=1)
+#
+# wheel2 = Text(leftFrame, width=50, height=1, takefocus=0, bg="black", fg="white")
+# wheel2.grid(row=20, column=0)
+# wheel2.insert(5.5, "Top Right Wheel Rotation Rate")
+# wheel2Label = Label(leftFrame, text=wheelRotation[1])
+# wheel2Label.grid(row=20, column=1)
+#
+# wheel3 = Text(leftFrame, width=50, height=1, takefocus=0, bg="black", fg="white")
+# wheel3.grid(row=21, column=0)
+# wheel3.insert(5.5, "Bottom Left Wheel Rotation Rate")
+# wheel3Label = Label(leftFrame, text=wheelRotation[2])
+# wheel3Label.grid(row=21, column=1)
+#
+# wheel4 = Text(leftFrame, width=50, height=1, takefocus=0, bg="black", fg="white")
+# wheel4.grid(row=22, column=0)
+# wheel4.insert(5.5, "Bottom Right Wheel Rotation Rate")
+# wheel4Label = Label(leftFrame, text=wheelRotation[3])
+# wheel4Label.grid(row=22, column=1)
+#
+# velocity_x = Text(leftFrame, width=50, height=1, takefocus=0, bg="black", fg="white")
+# velocity_x.grid(row=24, column=0)
+# velocity_x.insert(5.5, "Vehicle Velocity X")
+# velocity_xLabel = Label(leftFrame, text=velocity[0])
+# velocity_xLabel.grid(row=24, column=1)
+#
+# velocity_y = Text(leftFrame, width=50, height=1, takefocus=0, bg="black", fg="white")
+# velocity_y.grid(row=25, column=0)
+# velocity_y.insert(5.5, "Vehicle Velocity Y")
+# velocity_yLabel = Label(leftFrame, text=velocity[1])
+# velocity_yLabel.grid(row=25, column=1)
+#
 
 root.mainloop()
