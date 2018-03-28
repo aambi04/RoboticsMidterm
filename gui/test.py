@@ -1,53 +1,50 @@
+from Tkinter import *
+import math
 
-import tkinter as tk
+WIDTH = 400
+HEIGHT = 400
+CANVAS_MID_X = WIDTH/2
+CANVAS_MID_Y = HEIGHT/2
+SIDE = WIDTH/4
 
-class Mainframe(tk.Frame):
-    # Mainframe contains the widgets
-    # More advanced programs may have multiple frames
-    # or possibly a grid of subframes
+root = Tk()
+canvas = Canvas(root, bg="black", height=HEIGHT, width=WIDTH)
+canvas.pack()
 
-    def __init__(self,master,*args,**kwargs):
-        # *args packs positional arguments into tuple args
-        # **kwargs packs keyword arguments into dict kwargs
+vertices = [
+    [CANVAS_MID_X - SIDE/2, CANVAS_MID_Y - SIDE/2],
+    [CANVAS_MID_X + SIDE/2, CANVAS_MID_Y - SIDE/2],
+    [CANVAS_MID_X + SIDE/2, CANVAS_MID_Y + SIDE/2],
+    [CANVAS_MID_X - SIDE/2, CANVAS_MID_Y + SIDE/2],
+]
 
-        # initialise base class
-        tk.Frame.__init__(self,master,*args,**kwargs)
-        # in this case the * an ** operators unpack the parameters
+def rotate(points, angle, center):
+    angle = math.radians(angle)
+    cos_val = math.cos(angle)
+    sin_val = math.sin(angle)
+    cx, cy = center
+    new_points = []
+    for x_old, y_old in points:
+        x_old -= cx
+        y_old -= cy
+        x_new = x_old * cos_val - y_old * sin_val
+        y_new = x_old * sin_val + y_old * cos_val
+        new_points.append([x_new + cx, y_new + cy])
+    return new_points
 
-        # put your widgets here
-        self.Temperature = tk.IntVar()
-        tk.Label(self,textvariable = self.Temperature).pack()
-        self.TimerInterval = 500
+def draw_square(points, color="red"):
+    canvas.create_polygon(points, fill=color)
 
-        # variable for dummy GetTemp
-        self.Temp = 0
+def test():
+    old_vertices = [[150, 150], [250, 150], [250, 250], [150, 250]]
+    print "vertices: ", vertices, "should be: ", old_vertices
+    print vertices == old_vertices
 
-        # call Get Temp which will call itself after a delay
-        self.GetTemp()
+draw_square(vertices, "blue")
 
-    def GetTemp(self):
-        ## replace this with code to read sensor
-        self.Temperature.set(self.Temp)
-        self.Temp += 1
+center = (CANVAS_MID_X, CANVAS_MID_Y)
+new_square = rotate(vertices, 30, center)
+test()
+draw_square(new_square)
 
-        # Now repeat call
-        self.after(self.TimerInterval,self.GetTemp)
-
-class App(tk.Tk):
-    def __init__(self):
-        tk.Tk.__init__(self)
-
-        # set the title bar text
-        self.title('CPU Temperature Demo')
-        # Make sure app window is big enough to show title
-        self.geometry('300x100')
-
-        # create and pack a Mainframe window
-        Mainframe(self).pack()
-
-        # now start
-        self.mainloop()
-
-# create an App object
-# it will run itself
-App()
+mainloop()
