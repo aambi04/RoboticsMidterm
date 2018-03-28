@@ -57,6 +57,7 @@ class Vehicle:
         self.mode = None
         self.totalDist = 0
         self.waypoints = []
+        self.path = None
 
 
 ##################### HELPER FUNCTIONS #####################################
@@ -82,6 +83,10 @@ class Vehicle:
     def getWheelRotation(self):
         return self.wheelRotation
 
+    def setTheta(self, theta):
+        self.adjustHeadingAngle(theta)
+
+
     def setRelative(self):
         self.active = False
         pos = canvas.coords(self.shape)                     #get the coordinates of the vehicle
@@ -102,14 +107,15 @@ class Vehicle:
         self.wheelRotation = [0,0,0,0]
         self.totalDist = 0
         self.waypoints = []
+        canvas.delete(self.path)
 
-    def processing(self, v_d, theta_d):         #20 ms readings
+    def processing(self, v_d, theta_d, omega):         #20 ms readings
 
         v_cx = v_d * np.cos(theta_d)
 
         v_cy = v_d * np.sin(theta_d + np.pi)
 
-        self.wheelRotation = self.wheelRotationalVelocity(v_cx, v_cy, self.inclineAngle)
+        self.wheelRotation = self.wheelRotationalVelocity(v_cx, v_cy, omega)
 
         return v_cx, v_cy
 
@@ -156,6 +162,7 @@ class Vehicle:
         self.wheelRotation = [0,0,0,0]
         self.totalDist = 0
         self.waypoints = []
+        canvas.delete(self.path)
 
 ############################# RECTANGLE ########################################
 
@@ -178,7 +185,7 @@ class Vehicle:
 
         if np.linalg.norm(self.dist) >= self.rect[self.totalDist]:
             thetaD = self.inclineAngle - (PI / 2.0)          # move along the x axis
-            self.speedx, self.speedy = self.processing(self.vd, thetaD)
+            self.speedx, self.speedy = self.processing(self.vd, thetaD, self.inclineAngle)
             self.relative = [self.ref_point[0], self.ref_point[1]]
 
             self.totalDist += 1
@@ -198,9 +205,25 @@ class Vehicle:
     def moveRectangle(self, length, width, incline = 0):
         thetaD = incline
         self.rect = [feettoPixels(width), feettoPixels(length), feettoPixels(width), feettoPixels(length), incline]
-        self.speedx, self.speedy = self.processing(self.vd, thetaD)
+        self.speedx, self.speedy = self.processing(self.vd, thetaD, self.inclineAngle)
         self.inclineAngle = thetaD
+        # self.createRectanglePath(length, width, incline)
         self.move_activeRect()
+
+    # def createRectanglePath(self, length, width, incline):
+    #     #[X_CENTER + length * np.cos(np.pi/2. - incline), Y_CENTER - length * np.sin(np.pi/2. - incline)]
+    #     vertex = [[X_CENTER, Y_CENTER],
+    #               [X_CENTER, Y_CENTER + feettoPixels(length)],
+    #               [X_CENTER + feettoPixels(width), Y_CENTER + feettoPixels(length)],
+    #               [X_CENTER + feettoPixels(width), Y_CENTER]]
+    #     pos = canvas.coords(self.shape)                     #get the coordinates of the vehicle
+    #     self.ref_point = [(pos[0] + pos[4])/2, (pos[1] + pos[5])/2]
+    #
+    #     vertex = [[X_CENTER, Y_CENTER],
+    #               [X_CENTER + length * np.cos(np.pi/2. - incline), Y_CENTER - length * np.sin(np.pi/2. - incline)],
+    #               [X_CENTER + feettoPixels(width), Y_CENTER + feettoPixels(length)],
+    #               [X_CENTER + feettoPixels(width), Y_CENTER]]
+    #     self.path = canvas.create_polygon(vertex, fill="", outline="red", width=3)
 
 ####################### CIRCLE ###############################################
 
@@ -230,7 +253,7 @@ class Vehicle:
             self.active = False
         else:
             thetaD = self.inclineAngle - (10.0 * PI / 180.0)
-            self.speedx, self.speedy = self.processing(self.vd, thetaD)
+            self.speedx, self.speedy = self.processing(self.vd, thetaD, self.inclineAngle)
             self.inclineAngle = deepcopy(thetaD)
             self.relative = [self.ref_point[0], self.ref_point[1]]
 
@@ -238,7 +261,7 @@ class Vehicle:
     def moveCircle(self, radi, incline = 0):
         thetaD = (85.0 * PI)/180.0 + incline
         self.circle = [radi, incline]
-        self.speedx, self.speedy = self.processing(self.vd, thetaD)
+        self.speedx, self.speedy = self.processing(self.vd, thetaD, self.inclineAngle)
         self.inclineAngle = thetaD
         self.move_activeCircle()
 
@@ -269,7 +292,7 @@ class Vehicle:
             self.totalDist += 1
             self.vd = self.figure[self.figIndex] * (PI * 10.0 / 180.0)
             self.cicumference = 0
-            self.speedx, self.speedy = self.processing(self.vd, self.inclineAngle)
+            self.speedx, self.speedy = self.processing(self.vd, self.inclineAngle, self.inclineAngle)
             self.relative = [self.ref_point[0], self.ref_point[1]]
             self.degRotation *= -1
             if self.totalDist == 2:
@@ -279,7 +302,7 @@ class Vehicle:
 
 
         thetaD = self.inclineAngle - self.degRotation
-        self.speedx, self.speedy = self.processing(self.vd, thetaD)
+        self.speedx, self.speedy = self.processing(self.vd, thetaD, self.inclineAngle)
         self.relative = [self.ref_point[0], self.ref_point[1]]
         self.inclineAngle = deepcopy(thetaD)
 
@@ -290,7 +313,7 @@ class Vehicle:
         self.figure = [topradi, bottomradi, topIncline]
         self.dist[0] = topradi
         self.dist[1] = bottomradi
-        self.speedx, self.speedy = self.processing(self.vd, thetaD)
+        self.speedx, self.speedy = self.processing(self.vd, thetaD, self.inclineAngle)
         self.inclineAngle = thetaD
         self.move_activeFigure()
 
@@ -362,24 +385,10 @@ class Vehicle:
         self.helpStart(x, y)
         self.move_activePoint()
 
-################## WayPoints ############################
-
-    def moveWayPoint(self,iter, index = 0):
-
-        if not self.active and index < len(iter):
-            point = iter[index]
-            self.active = True
-            self.movePoints(point[0],point[1])
-
-            index += 1
-        canvas.after(50, self.moveWayPoint, iter, index)
-
-
 
 ################### Infinite Rotate #####################
 
     def rotate(self, points, angle, center):
-        # angle = math.radians(angle)
         cos_val = math.cos(angle)
         sin_val = math.sin(angle)
         cx, cy = center
@@ -397,7 +406,7 @@ class Vehicle:
     def adjustHeadingAngle(self, theta):
 
         self.headingAngle = theta
-        self.wheelRotation = self.wheelRotationalVelocity(self.speedx, self.speedy, self.headingAngle)
+        # self.wheelRotation = self.wheelRotationalVelocity(self.speedx, self.speedy, self.headingAngle)
         pos = canvas.coords(self.shape)
         self.ref_point = [(pos[0] + pos[4])/2, (pos[1] + pos[5])/2]
         new_points = self.rotate(pos, self.headingAngle, self.ref_point)
@@ -421,14 +430,15 @@ class Vehicle:
             self.shape = canvas.create_polygon(VERTICES, fill=color)
         else:
             thetaD = theta - (self.headingAngle + omega/10)
-            self.speedx, self.speedy = self.processing(self.vd, thetaD)
+            self.speedx, self.speedy = self.processing(self.vd, thetaD, self.headingAngle)
             self.headingAngle +=  omega/10
 
 
     def moveInfinite(self, theta, omega, speed):
         thetanew = theta - (self.headingAngle + omega)
+        self.inclineAngle = theta
         self.vd = speed
-        self.speedx, self.speedy = self.processing(self.vd, thetanew)
+        self.speedx, self.speedy = self.processing(self.vd, thetanew, self.inclineAngle)
         self.headingAngle += omega/10
         self.move_active(theta, omega)
 
@@ -453,7 +463,7 @@ class Vehicle:
     def setWheels(self, wheel1, wheel2, wheel3, wheel4):
         velocity = self.kinematic(wheel1, wheel2, wheel3, wheel4)
         self.wheelRotation = [wheel1, wheel2, wheel3, wheel4]
-
+        print "wheels", wheel1, wheel2, wheel3, wheel4
         self.speedx = -velocity[0]
         self.speedy = -velocity[1]
         self.headingAngle = velocity[2]
@@ -568,14 +578,15 @@ inclinInpRec = Entry(leftFrame, width=10)
 inclinInpRec.grid(row=8, column=1)
 
 def rectangleCallback():
-    lengthAns = lengthInp.get()
-    widthAns = widthInp.get()
-    thetaAns = inclinInpRec.get() if inclinInpRec.get() != '' else 0
+    lengthAns = float(lengthInp.get())
+    widthAns = float(widthInp.get())
+    thetaAns = float(inclinInpRec.get()) if inclinInpRec.get() != '' else 0
 
     theta = np.radians(float(thetaAns))         # TODO: remove this before submitting
 
     robot.setRelative()
     robot.setMode('rectangle')
+    robot.createRectanglePath(lengthAns, widthAns, thetaAns)
     robot.setActive(True)
     robot.moveRectangle(lengthAns, widthAns, theta)
 
@@ -684,6 +695,8 @@ def pointCallback():
     x_fAns = float(x_fInp.get()) if x_fInp.get() != '' else 0
     y_fAns = float(y_fInp.get()) if y_fInp.get() != '' else 0
 
+
+
     result = []
     if way1Inpx.get() != '' and way1Inpy.get() != ''\
             and way2Inpy.get() != '' and way2Inpx.get() != ''\
@@ -744,56 +757,63 @@ wheel4.insert(5.5, "Bottom Right Wheel Rotational Rate (ft/sec): ")
 wheel4Inp = Entry(leftFrame, width=10)
 wheel4Inp.grid(row=28, column=1)
 
-thetaP = Text(leftFrame, width=50, height=1, takefocus=0)
-thetaP.grid(row=29, column=0)
-thetaP.insert(5.5, "Direction (thetaP in radians): ")
-thetaPInp = Entry(leftFrame, width=10)
-thetaPInp.grid(row=29, column=1)
-
-speed = Text(leftFrame, width=50, height=1, takefocus=0)
-speed.grid(row=30, column=0)
-speed.insert(5.5, "Velocity of vehicle (ft/sec & max:15ft/sec): ")
-speedInp = Entry(leftFrame, width=10)
-speedInp.grid(row=30, column=1)
-
-rotationalrate = Text(leftFrame, width=50, height=1, takefocus=0)
-rotationalrate.grid(row=31, column=0)
-rotationalrate.insert(5.5, "Rotational Rate of vehicle (rad/sec): ")
-rotationalrateInp = Entry(leftFrame, width=10)
-rotationalrateInp.grid(row=31, column=1)
-
-
-
 def wheelCallback():
     wheel1Ans = int(wheel1Inp.get()) if wheel1Inp.get() != '' else 0.0
     wheel2Ans = int(wheel2Inp.get()) if wheel2Inp.get() != '' else 0.0
     wheel3Ans = int(wheel3Inp.get()) if wheel3Inp.get() != '' else 0.0
     wheel4Ans = int(wheel4Inp.get()) if wheel4Inp.get() != '' else 0.0
-    thetaPAns = thetaPInp.get() if thetaPInp.get() != '' else 0.0
-    speedAns =  int(speedInp.get())  if speedInp.get() != '' else 0.0
-    rotationalAns = rotationalrateInp.get() if rotationalrateInp != '' else 0.0
-
-    # thetaPRads= np.radians(float(thetaPAns))         # TODO: remove this before submitting
-    # rotateRads = np.radians(float(rotationalAns))
-
-    # velocity = robot.kinematic()
 
 
     robot.setActive(True)
     robot.setWheels(wheel1Ans, wheel2Ans, wheel3Ans, wheel4Ans)
     robot.setMode('infinite')
-    # robot.moveInfinite(thetaPRads, rotateRads, speedAns)
 
 
 wheelSubmit = Button(leftFrame, text="submit", width=10, command=wheelCallback)
-wheelSubmit.grid(row=32, column = 1, sticky = W)
+wheelSubmit.grid(row=29, column = 1, sticky = W)
+
+thetaP = Text(leftFrame, width=50, height=1, takefocus=0)
+thetaP.grid(row=30, column=0)
+thetaP.insert(5.5, "Direction (thetaP in radians): ")
+thetaPInp = Entry(leftFrame, width=10)
+thetaPInp.grid(row=30, column=1)
+
+speed = Text(leftFrame, width=50, height=1, takefocus=0)
+speed.grid(row=31, column=0)
+speed.insert(5.5, "Velocity of vehicle (ft/sec & max:15ft/sec): ")
+speedInp = Entry(leftFrame, width=10)
+speedInp.grid(row=31, column=1)
+
+rotationalrate = Text(leftFrame, width=50, height=1, takefocus=0)
+rotationalrate.grid(row=32, column=0)
+rotationalrate.insert(5.5, "Rotational Rate of vehicle (rad/sec): ")
+rotationalrateInp = Entry(leftFrame, width=10)
+rotationalrateInp.grid(row=32, column=1)
+
+
+def forwardKinematic():
+    thetaPAns = float(thetaPInp.get()) if thetaPInp.get() != '' else 0.0
+    speedAns =  int(speedInp.get())  if speedInp.get() != '' else 0.0
+    rotationalAns = float(rotationalrateInp.get()) if rotationalrateInp.get() != '' else 0.0
+
+    if speedAns <= 15:
+        thetaPRads= np.radians(thetaPAns)         # TODO: remove this before submitting
+        rotateRads = np.radians(rotationalAns)
+
+        robot.setVD(speedAns)
+        robot.setActive(True)
+        robot.setMode('infinite')
+        robot.moveInfinite(thetaPRads, rotateRads, speedAns)
+forwardSubmit = Button(leftFrame, text="submit", width=10, command=forwardKinematic)
+forwardSubmit.grid(row=33, column = 1, sticky = W)
+
 
 
 time = Text(leftFrame, width=50, height=1, takefocus=0)
-time.grid(row=33, column=0)
+time.grid(row=35, column=0)
 time.insert(5.5, "Time taken from Start to End Points ")
 timeEnt = Entry(leftFrame, width=10)
-timeEnt.grid(row=33, column=1)
+timeEnt.grid(row=35, column=1)
 
 def timeCallback():
     timeAns = timeEnt.get()
@@ -801,13 +821,13 @@ def timeCallback():
     # if
 
 reset = Button(leftFrame, text="submit", width=10, command=timeCallback)
-reset.grid(row=34, column = 1)
+reset.grid(row=36, column = 1)
 
 def resetCallback():
     robot.reset()
 
 reset = Button(leftFrame, text="RESET", width=10, command=resetCallback)
-reset.grid(row=35, column = 2)
+reset.grid(row=18, column = 3)
 
 #Output Values
 
