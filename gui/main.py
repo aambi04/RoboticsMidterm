@@ -44,8 +44,8 @@ class Vehicle:
         self.active = active
         self.dist = [0, 0]
         self.relative = [X_CENTER, Y_CENTER]
-        self.vd = 2
-        self.rect = [0,0,0]         # length, width, inclincation theta
+        self.vd = 1
+        self.rect = [0,0,0, 0, 0]         # length, width, inclincation theta
         self.circle = [0,0]
         self.figure = [0,0,0,0]
         self.resetdist = [0, 0]
@@ -55,6 +55,7 @@ class Vehicle:
         self.headingAngle = PI/2
         self.wheelRotation = [0,0,0,0]
         self.mode = None
+        self.totalDist = 0
 
 ##################### HELPER FUNCTIONS #####################################
 
@@ -73,12 +74,37 @@ class Vehicle:
     def getMode(self):
         return self.mode
 
+    def setRelative(self):
+        self.active = False
+        pos = canvas.coords(self.shape)                     #get the coordinates of the vehicle
+        self.relative = [(pos[0] + pos[4])/2, (pos[1] + pos[5])/2]
+        # canvas.delete(self.shape)
+        # self.shape = canvas.create_polygon(pos, fill=color)
+        self.speedx = 1
+        self.speedy = 1
+        self.inclineAngle = 0
+        # self.ref_point = [X_CENTER, Y_CENTER]
+        self.dist = [0, 0]
+        self.vd = 2
+        self.rect = [0,0,0,0,0]         # length, width, inclincation theta
+        self.circle = [0,0]
+        self.figure = [0,0,0,0]
+        self.resetdist = [0, 0]
+        self.cicumference = 0
+        self.figIndex = 0
+        self.degRotation = 10.0 * PI/180.0
+        self.headingAngle = PI/2
+        self.wheelRotation = [0,0,0,0]
+        self.totalDist = 0
+
     def processing(self, v_d, theta_d):         #20 ms readings
 
         print "theta_d and v_d", theta_d, v_d
         v_cx = v_d * np.cos(theta_d)
 
         v_cy = v_d * np.sin(theta_d + np.pi)
+
+        # if theta_d > 0
 
         # wheelRotationalVelocity(v_cx, v_cy, omega)
 
@@ -119,8 +145,8 @@ class Vehicle:
         self.ref_point = [X_CENTER, Y_CENTER]
         self.dist = [0, 0]
         self.relative = [X_CENTER, Y_CENTER]
-        self.vd = 2
-        self.rect = [0,0,0]         # length, width, inclincation theta
+        self.vd = 1
+        self.rect = [0,0,0,0,0]         # length, width, inclincation theta
         self.circle = [0,0]
         self.figure = [0,0,0,0]
         self.resetdist = [0, 0]
@@ -129,6 +155,8 @@ class Vehicle:
         self.degRotation = 10.0 * PI/180.0
         self.headingAngle = PI/2
         self.wheelRotation = [0,0,0,0]
+        self.totalDist = 0
+
 ############################# RECTANGLE ########################################
 
 
@@ -152,21 +180,30 @@ class Vehicle:
         # how much the vehicle has traveled in the x and y direction
         self.dist[0] = self.resetdist[0] + math.fabs(self.ref_point[0] - self.relative[0])
         self.dist[1] = self.resetdist[1] + math.fabs(self.ref_point[1] - self.relative[1])
-        length = self.rect[1]
-        width = self.rect[0]
+        # length = self.rect[1]
+        # width = self.rect[0]
+
         #
-        print width, length
         # print "dist", self.dist[0], self.dist[1]
         # print "rect, ", self.rect
-        sin_angle = math.fabs(round(np.sin(math.fabs(self.inclineAngle - self.rect[2])), 2))
+        # sin_angle = math.fabs(round(np.sin(math.fabs(self.inclineAngle - self.rect[2])), 2))
+        # if self.inclineAngle % PI/2. == 0:
+        #     sin_angle = 1
         # print "angle", sin_angle
-        if (self.dist[1] >= length and sin_angle == 1) or (self.dist[0] >= width and sin_angle == 0):
+        # if (self.dist[1] >= length and sin_angle == 1) or (self.dist[0] >= width and sin_angle == 0):
+        if np.linalg.norm(self.dist) >= self.rect[self.totalDist]:
             thetaD = self.inclineAngle - (PI / 2.0)          # move along the x axis
             self.speedx, self.speedy = self.processing(self.vd, thetaD)
             self.relative = [self.ref_point[0], self.ref_point[1]]
+
+            self.totalDist += 1
+            if self.totalDist == 4:
+                self.active = False
+            print "totalDist ", self.totalDist
             self.dist = [0,0]
             self.resetdist = [0,0]
             self.inclineAngle = deepcopy(thetaD)
+
             # print "CHANGE"
             # print self.speedx, self.speedy
             # print self.relative[0], self.relative[1]
@@ -175,12 +212,13 @@ class Vehicle:
             self.shape = canvas.create_polygon(VERTICES, fill=color)
             self.resetdist = deepcopy(self.dist)
             self.relative = [X_CENTER, Y_CENTER]
-            # print "RESTART"
+
 
     def moveRectangle(self, length, width, incline = 0):
-        thetaD = (PI/2.0) + incline
-        self.rect = [feettoPixels(width), feettoPixels(length), incline]
+        thetaD = incline
+        self.rect = [feettoPixels(width), feettoPixels(length), feettoPixels(width), feettoPixels(length), incline]
         self.speedx, self.speedy = self.processing(self.vd, thetaD)
+        print "speedx y", self.speedx, self.speedy
         self.inclineAngle = thetaD
         self.move_activeRect()
 
@@ -202,17 +240,24 @@ class Vehicle:
         pos = canvas.coords(self.shape)                     #get the coordinates of the vehicle
         self.ref_point = [(pos[0] + pos[4])/2, (pos[1] + pos[5])/2]
 
-        print "ref point", self.ref_point[0], self.ref_point[1]
+        # print "ref point", self.ref_point[0], self.ref_point[1]
+        self.cicumference += np.linalg.norm(np.array(self.ref_point) - np.array(self.relative))
+        cicum = 2 * PI * self.circle[0]
+
+        print "cicum   ", cicum, self.cicumference
+
         if self.ref_point[0] >= WIDTH - THREEFEET or self.ref_point[0] <= THREEFEET or self.ref_point[1] >= HEIGHT - THREEFEET or self.ref_point[1] <= THREEFEET:        # reset and put image in the center of the screen
             canvas.delete(self.shape)
             self.shape = canvas.create_polygon(VERTICES, fill=color)
             print "RESTART"
+        elif self.cicumference >= cicum:
+            self.active = False
         else:
             thetaD = self.inclineAngle - (10.0 * PI / 180.0)
             print "thetaD", thetaD
             self.speedx, self.speedy = self.processing(self.vd, thetaD)
             self.inclineAngle = deepcopy(thetaD)
-            print "CHANGE CIRCLE"
+            self.relative = [self.ref_point[0], self.ref_point[1]]
 
 
     def moveCircle(self, radi, incline = 0):
@@ -248,18 +293,21 @@ class Vehicle:
         elif self.cicumference >= cicum - 5:
             #swap between top of bottom
             self.figIndex = 1 if self.figIndex == 0 else 0
-
+            self.totalDist += 1
             self.vd = self.figure[self.figIndex] * (PI * 10.0 / 180.0)
             print"self.vd", self.vd
             self.cicumference = 0
-            thetaD = (self.inclineAngle + self.figure[self.figIndex + 2])    #+ self.figure[self.figIndex + 2]
+            thetaD = (self.inclineAngle + self.figure[2])    #+ self.figure[self.figIndex + 2]
             print thetaD
             self.speedx, self.speedy = self.processing(self.vd, thetaD)
             self.relative = [self.ref_point[0], self.ref_point[1]]
             self.inclineAngle = deepcopy(thetaD)
             self.degRotation *= -1
             print "changing", self.speedx, self.speedy
+            if self.totalDist == 2:
+                self.active = False
             return
+
 
 
         thetaD = self.inclineAngle - self.degRotation
@@ -270,9 +318,9 @@ class Vehicle:
 
 
 
-    def moveFigure(self, topradi, bottomradi, topIncline = 0, bottomIncline = 0):
+    def moveFigure(self, topradi, bottomradi, topIncline = 0):
         thetaD = (85.0 * PI)/180.0 + topIncline
-        self.figure = [topradi, bottomradi, topIncline, bottomIncline]
+        self.figure = [topradi, bottomradi, topIncline]
         self.dist[0] = topradi
         self.dist[1] = bottomradi
         self.speedx, self.speedy = self.processing(self.vd, thetaD)
@@ -472,18 +520,19 @@ inclinInp = Entry(leftFrame, width=10)
 inclinInp.grid(row=2, column=1)
 
 def circleCallback():
-    radiAns = radiInp.get()
-    inclinAns = inclinInp.get() if inclinInp.get() != '' else 0
+    radiAns = float(radiInp.get()) if radiInp.get() != '' else 0.0
+    inclinAns = inclinInp.get() if inclinInp.get() != '' else 0.0
 
     radi = feettoPixels(radiAns)
 
     incline = np.radians(float(inclinAns))         # TODO: remove this before submitting
 
-    robot.setActive(True)
+    robot.setRelative()
     robot.setVD(radi * (PI * 10.0 / 180.0))
     robot.setMode('circle')
-    robot.moveCircle(radi, incline)
 
+    robot.setActive(True)
+    robot.moveCircle(radi, incline)
 
 circleSubmit = Button(leftFrame, text="submit", width=10, command=circleCallback)
 circleSubmit.grid(row=3, column = 1)
@@ -519,10 +568,10 @@ def rectangleCallback():
 
     theta = np.radians(float(thetaAns))         # TODO: remove this before submitting
 
-    robot.setActive(True)
+    robot.setRelative()
     robot.setMode('rectangle')
+    robot.setActive(True)
     robot.moveRectangle(lengthAns, widthAns, theta)
-
 
 
 rectangleSubmit = Button(leftFrame, text="submit", width=10, command=rectangleCallback)
@@ -551,28 +600,23 @@ inclinTop.insert(5.5, "Top inclination, thetap (radians):")
 inclinTopInp = Entry(leftFrame, width=10)
 inclinTopInp.grid(row=13, column=1)
 
-inclinBot = Text(leftFrame, width=50, height=1, takefocus=0)
-inclinBot.grid(row=14, column=0)
-inclinBot.insert(5.5, "Bottom inclination, thetap (radians):")
-inclinBotInp = Entry(leftFrame, width=10)
-inclinBotInp.grid(row=14, column=1)
 
 def figureCallback():
     radiTopAns = radiTopInp.get()
     radiBotAns = radiBotInp.get()
     inclinTopAns = inclinTopInp.get() if inclinTopInp.get() != '' else 0
-    inclinBotAns = inclinBotInp.get() if inclinBotInp.get() != '' else 0
 
     topRadi = feettoPixels(radiTopAns)
     bottomRadi = feettoPixels(radiBotAns)
 
     inclineTop= np.radians(float(inclinTopAns))         # TODO: remove this before submitting
-    inclineBottom = np.radians(float(inclinBotAns))
 
-    robot.setActive(True)
+    robot.setRelative()
     robot.setMode('figure 8')
     robot.setVD(topRadi * (PI * 10.0 / 180.0))
-    robot.moveFigure(topRadi, bottomRadi, inclineTop, inclineBottom)
+
+    robot.setActive(True)
+    robot.moveFigure(topRadi, bottomRadi, inclineTop)
 
 
 figSubmit = Button(leftFrame, text="submit", width=10, command=figureCallback)
@@ -604,6 +648,7 @@ def pointCallback():
 
 
     robot.setActive(True)
+    robot.setRelative()
     robot.setMode('Point')
     robot.movePoints(x_fAns, y_fAns)
 
