@@ -283,11 +283,8 @@ class Vehicle:
             self.vd = self.figure[self.figIndex] * (PI * 10.0 / 180.0)
             print"self.vd", self.vd
             self.cicumference = 0
-            thetaD = (self.inclineAngle + self.figure[2])    #+ self.figure[self.figIndex + 2]
-            print thetaD
-            self.speedx, self.speedy = self.processing(self.vd, thetaD)
+            self.speedx, self.speedy = self.processing(self.vd, self.inclineAngle)
             self.relative = [self.ref_point[0], self.ref_point[1]]
-            self.inclineAngle = deepcopy(thetaD)
             self.degRotation *= -1
             print "changing", self.speedx, self.speedy
             if self.totalDist == 2:
@@ -355,9 +352,6 @@ class Vehicle:
 
     def helpStart(self, x, y):
         self.resetdist = [0, 0]
-        # self.dist[0] = feettoPixels(float(math.fabs(x)))
-        # self.dist[1] = feettoPixels(float(math.fabs(y)))
-
         rel_x = (feettoPixels(float(x)) + X_CENTER) - self.relative[0]
         rel_y = (-feettoPixels(float(y)) + Y_CENTER) - self.relative[1]
 
