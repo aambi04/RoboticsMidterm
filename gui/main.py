@@ -33,6 +33,9 @@ velocity=[-1,-3]
 def feettoPixels(feet):
     return 24 * int(feet)
 
+def pixelsToFeet(pixels):
+    return int(pixels) / 24.
+
 
 class Vehicle:
     def __init__(self, active):
@@ -56,6 +59,7 @@ class Vehicle:
         self.wheelRotation = [0,0,0,0]
         self.mode = None
         self.totalDist = 0
+        self.waypoints = []
 
 ##################### HELPER FUNCTIONS #####################################
 
@@ -78,12 +82,9 @@ class Vehicle:
         self.active = False
         pos = canvas.coords(self.shape)                     #get the coordinates of the vehicle
         self.relative = [(pos[0] + pos[4])/2, (pos[1] + pos[5])/2]
-        # canvas.delete(self.shape)
-        # self.shape = canvas.create_polygon(pos, fill=color)
         self.speedx = 1
         self.speedy = 1
         self.inclineAngle = 0
-        # self.ref_point = [X_CENTER, Y_CENTER]
         self.dist = [0, 0]
         self.vd = 2
         self.rect = [0,0,0,0,0]         # length, width, inclincation theta
@@ -96,6 +97,7 @@ class Vehicle:
         self.headingAngle = PI/2
         self.wheelRotation = [0,0,0,0]
         self.totalDist = 0
+        self.waypoints = []
 
     def processing(self, v_d, theta_d):         #20 ms readings
 
@@ -156,6 +158,7 @@ class Vehicle:
         self.headingAngle = PI/2
         self.wheelRotation = [0,0,0,0]
         self.totalDist = 0
+        self.waypoints = []
 
 ############################# RECTANGLE ########################################
 
@@ -173,24 +176,10 @@ class Vehicle:
         pos = canvas.coords(self.shape)                     #get the coordinates of the vehicle
         self.ref_point = [(pos[0] + pos[4])/2, (pos[1] + pos[5])/2]
 
-        # print "ref point", self.ref_point[0], self.ref_point[1]
-        # print "relative", self.relative[0], self.relative[1]
-        # print "self.resetdist", self.resetdist[0], self.resetdist[1]
 
-        # how much the vehicle has traveled in the x and y direction
         self.dist[0] = self.resetdist[0] + math.fabs(self.ref_point[0] - self.relative[0])
         self.dist[1] = self.resetdist[1] + math.fabs(self.ref_point[1] - self.relative[1])
-        # length = self.rect[1]
-        # width = self.rect[0]
 
-        #
-        # print "dist", self.dist[0], self.dist[1]
-        # print "rect, ", self.rect
-        # sin_angle = math.fabs(round(np.sin(math.fabs(self.inclineAngle - self.rect[2])), 2))
-        # if self.inclineAngle % PI/2. == 0:
-        #     sin_angle = 1
-        # print "angle", sin_angle
-        # if (self.dist[1] >= length and sin_angle == 1) or (self.dist[0] >= width and sin_angle == 0):
         if np.linalg.norm(self.dist) >= self.rect[self.totalDist]:
             thetaD = self.inclineAngle - (PI / 2.0)          # move along the x axis
             self.speedx, self.speedy = self.processing(self.vd, thetaD)
@@ -204,9 +193,6 @@ class Vehicle:
             self.resetdist = [0,0]
             self.inclineAngle = deepcopy(thetaD)
 
-            # print "CHANGE"
-            # print self.speedx, self.speedy
-            # print self.relative[0], self.relative[1]
         elif self.ref_point[0] >= WIDTH - THREEFEET or self.ref_point[0] <= THREEFEET or self.ref_point[1] >= HEIGHT - THREEFEET or self.ref_point[1] <= THREEFEET:        # reset and put image in the center of the screen
             canvas.delete(self.shape)
             self.shape = canvas.create_polygon(VERTICES, fill=color)
@@ -336,7 +322,7 @@ class Vehicle:
     def vehicle_updatePoints(self):
         delta_x = int(round(self.speedx))
         delta_y = int(round(self.speedy))
-        print "speedx", delta_x, delta_y
+        # print "speedx", delta_x, delta_y
         canvas.move(self.shape, delta_x , delta_y)
         pos = canvas.coords(self.shape)                     #get the coordinates of the vehicle
         self.ref_point = [(pos[0] + pos[4])/2, (pos[1] + pos[5])/2]
@@ -346,27 +332,80 @@ class Vehicle:
         normy = self.resetdist[1] + math.fabs(self.ref_point[1] - self.relative[1])
 
 
-        if normx >= self.dist[0] and normy >= self.dist[1]:
-            print "inactive"
-            self.active = False
-        elif self.ref_point[0] >= WIDTH - THREEFEET or self.ref_point[0] <= THREEFEET or self.ref_point[1] >= HEIGHT - THREEFEET or self.ref_point[1] <= THREEFEET:        # reset and put image in the center of the screen
+        if self.ref_point[0] >= WIDTH - THREEFEET or self.ref_point[0] <= THREEFEET or self.ref_point[1] >= HEIGHT - THREEFEET or self.ref_point[1] <= THREEFEET:        # reset and put image in the center of the screen
             print "blah"
+            self.relative = [X_CENTER, Y_CENTER]
             canvas.delete(self.shape)
             self.shape = canvas.create_polygon(VERTICES, fill=color)
             self.resetdist = deepcopy([normx, normy])
 
-    def movePoints(self, x, y):
-        end_x = feettoPixels(float(math.fabs(x)))
-        end_y = feettoPixels(float(math.fabs(y)))
-        self.resetdist = [0,0]
-        self.dist[0] = end_x
-        self.dist[1] = end_y
-        thetaD = np.arctan(float(y) / float(x))
-        print "x and y ", x, y
-        if (x < 0 and y < 0) or (x < 0 and y > 0):
-            thetaD += np.pi
-        self.speedx, self.speedy = self.processing(self.vd, thetaD)
+        print "norm x norm y", normx, normy, self.dist[0], self.dist[1]
+
+        if normx >= self.dist[0] and normy >= self.dist[1]:
+            print "inactive"
+
+            self.totalDist += 1
+            if self.totalDist == len(self.waypoints):
+                self.active = False
+                return
+            self.relative = deepcopy(self.ref_point)
+            self.helpStart(self.waypoints[self.totalDist][0], self.waypoints[self.totalDist][1])
+
+
+
+    def helpStart(self, x, y):
+        self.resetdist = [0, 0]
+        # self.dist[0] = feettoPixels(float(math.fabs(x)))
+        # self.dist[1] = feettoPixels(float(math.fabs(y)))
+
+        rel_x = (feettoPixels(float(x)) + X_CENTER) - self.relative[0]
+        rel_y = (-feettoPixels(float(y)) + Y_CENTER) - self.relative[1]
+
+        self.dist[0] = math.fabs(rel_x)
+        self.dist[1] = math.fabs(rel_y)
+
+        print "compare", -feettoPixels(float(y)), Y_CENTER, self.relative[1]
+        print "compare", feettoPixels(float(x)), X_CENTER, self.relative[0]
+        print "x and y ", rel_x, rel_y, x, y
+        if rel_x == 0 and rel_y <= 0:
+            thetaD = 3*PI/2.
+        elif rel_x == 0 and rel_y > 0:
+            thetaD = PI/ 2.
+        elif rel_y == 0 and rel_x < 0:
+            thetaD = PI
+        elif rel_y == 0 and rel_x > 0:
+            thetaD = 0
+        else:
+            thetaD = np.arctan(rel_y / rel_x)
+            if (rel_x < 0 and rel_y < 0) or (rel_x < 0 and rel_y > 0):
+                thetaD += np.pi
+
+        self.speedx = self.vd * np.cos(thetaD)
+        self.speedy = self.vd * np.sin(thetaD)
+        print "speeds", self.speedx, self.speedy
+
+    def movePoints(self, points):
+        x = points[0][0]
+        y = points[0][1]
+        self.totalDist = 0
+        self.waypoints = deepcopy(points)
+        self.helpStart(x, y)
         self.move_activePoint()
+
+################## WayPoints ############################
+
+    def moveWayPoint(self,iter, index = 0):
+
+        if not self.active and index < len(iter):
+            point = iter[index]
+            self.active = True
+            self.movePoints(point[0],point[1])
+            print "i am in ", self.active
+
+            index += 1
+        canvas.after(50, self.moveWayPoint, iter, index)
+
+
 
 ################### Infinite Rotate #####################
 
@@ -641,67 +680,120 @@ y_f.insert(5.5, "Yf: ")
 y_fInp = Entry(leftFrame, width=10)
 y_fInp.grid(row=18, column=1)
 
+way1 = Text(leftFrame, width=50, height=1, takefocus=0)
+way1.grid(row=19, column=0)
+way1.insert(5.5, "WayPoint1 X & Y: ")
+way1Inpx = Entry(leftFrame, width=10)
+way1Inpx.grid(row=19, column=1)
+way1Inpy = Entry(leftFrame, width=10)
+way1Inpy.grid(row=19, column=2)
+
+way2 = Text(leftFrame, width=50, height=1, takefocus=0)
+way2.grid(row=20, column=0)
+way2.insert(5.5, "WayPoint2 X & Y: ")
+way2Inpx = Entry(leftFrame, width=10)
+way2Inpx.grid(row=20, column=1)
+way2Inpy = Entry(leftFrame, width=10)
+way2Inpy.grid(row=20, column=2)
+
+way3 = Text(leftFrame, width=50, height=1, takefocus=0)
+way3.grid(row=21, column=0)
+way3.insert(5.5, "WayPoint3 X & Y: ")
+way3Inpx = Entry(leftFrame, width=10)
+way3Inpx.grid(row=21, column=1)
+way3Inpy = Entry(leftFrame, width=10)
+way3Inpy.grid(row=21, column=2)
+
+way4 = Text(leftFrame, width=50, height=1, takefocus=0)
+way4.grid(row=22, column=0)
+way4.insert(5.5, "WayPoint4 X & Y: ")
+way4Inpx = Entry(leftFrame, width=10)
+way4Inpx.grid(row=22, column=1)
+way4Inpy = Entry(leftFrame, width=10)
+way4Inpy.grid(row=22, column=2)
+
 
 def pointCallback():
     x_fAns = float(x_fInp.get()) if x_fInp.get() != '' else 0
     y_fAns = float(y_fInp.get()) if y_fInp.get() != '' else 0
 
+    result = []
+    if way1Inpx.get() != '' and way1Inpy.get() != ''\
+            and way2Inpy.get() != '' and way2Inpx.get() != ''\
+            and way3Inpx.get() != '' and way3Inpy.get() != '':
+        way1_x = float(way1Inpx.get())
+        way1_y = float(way1Inpy.get())
+        way2_x = float(way2Inpx.get())
+        way2_y = float(way2Inpy.get())
+        way3_x = float(way3Inpx.get())
+        way3_y = float(way3Inpy.get())
+        if  way4Inpx.get() == '' or way4Inpy.get() == '':
+            result = [[way1_x, way1_y], [way2_x, way2_y], [way3_x, way3_y], [x_fAns, y_fAns]]
+        else:
+            way4_x = float(way4Inpx.get())
+            way4_y = float(way4Inpy.get())
+            result = [[way1_x, way1_y], [way2_x, way2_y], [way3_x, way3_y], [way4_x, way4_y], [x_fAns, y_fAns]]
 
-    robot.setActive(True)
+    else:
+        result.append([x_fAns, y_fAns])
+
     robot.setRelative()
     robot.setMode('Point')
-    robot.movePoints(x_fAns, y_fAns)
+    robot.setActive(True)
+    robot.movePoints(result)
+
+
 
 pointSubmit = Button(leftFrame, text="submit", width=10, command=pointCallback)
-pointSubmit.grid(row=19, column = 1, sticky = W)
+pointSubmit.grid(row=23, column = 1, sticky = W)
 
 
 #Manual Inputs
 wheelRotation = Text(leftFrame, width=50, height=1, takefocus=0)
-wheelRotation.grid(row=20, column=0)
+wheelRotation.grid(row=24, column=0)
 wheelRotation.insert(5.5, "Wheels Rotation")
 
 wheel1 = Text(leftFrame, width=50, height=1, takefocus=0)
-wheel1.grid(row=21, column=0)
+wheel1.grid(row=25, column=0)
 wheel1.insert(5.5, "Top Left Wheel Rotational Rate (ft/sec): ")
 wheel1Inp = Entry(leftFrame, width=10)
-wheel1Inp.grid(row=21, column=1)
+wheel1Inp.grid(row=25, column=1)
 
 wheel2 = Text(leftFrame, width=50, height=1, takefocus=0)
-wheel2.grid(row=22, column=0)
+wheel2.grid(row=26, column=0)
 wheel2.insert(5.5, "Top Right Wheel Rotational Rate (ft/sec): ")
 wheel2Inp = Entry(leftFrame, width=10)
-wheel2Inp.grid(row=22, column=1)
+wheel2Inp.grid(row=26, column=1)
 
 wheel3 = Text(leftFrame, width=50, height=1, takefocus=0)
-wheel3.grid(row=23, column=0)
+wheel3.grid(row=27, column=0)
 wheel3.insert(5.5, "Bottom Left Wheel Rotational Rate (ft/sec): ")
 wheel3Inp = Entry(leftFrame, width=10)
-wheel3Inp.grid(row=23, column=1)
+wheel3Inp.grid(row=27, column=1)
 
 wheel4 = Text(leftFrame, width=50, height=1, takefocus=0)
-wheel4.grid(row=24, column=0)
+wheel4.grid(row=28, column=0)
 wheel4.insert(5.5, "Bottom Right Wheel Rotational Rate (ft/sec): ")
 wheel4Inp = Entry(leftFrame, width=10)
-wheel4Inp.grid(row=24, column=1)
+wheel4Inp.grid(row=28, column=1)
 
 thetaP = Text(leftFrame, width=50, height=1, takefocus=0)
-thetaP.grid(row=25, column=0)
+thetaP.grid(row=29, column=0)
 thetaP.insert(5.5, "Direction (thetaP in radians): ")
 thetaPInp = Entry(leftFrame, width=10)
-thetaPInp.grid(row=25, column=1)
+thetaPInp.grid(row=29, column=1)
 
 speed = Text(leftFrame, width=50, height=1, takefocus=0)
-speed.grid(row=26, column=0)
+speed.grid(row=30, column=0)
 speed.insert(5.5, "Velocity of vehicle (ft/sec & max:15ft/sec): ")
 speedInp = Entry(leftFrame, width=10)
-speedInp.grid(row=26, column=1)
+speedInp.grid(row=30, column=1)
 
 rotationalrate = Text(leftFrame, width=50, height=1, takefocus=0)
-rotationalrate.grid(row=27, column=0)
+rotationalrate.grid(row=31, column=0)
 rotationalrate.insert(5.5, "Rotational Rate of vehicle (rad/sec): ")
 rotationalrateInp = Entry(leftFrame, width=10)
-rotationalrateInp.grid(row=27, column=1)
+rotationalrateInp.grid(row=31, column=1)
 
 
 
@@ -728,7 +820,7 @@ def wheelCallback():
 
 
 wheelSubmit = Button(leftFrame, text="submit", width=10, command=wheelCallback)
-wheelSubmit.grid(row=28, column = 1, sticky = W)
+wheelSubmit.grid(row=32, column = 1, sticky = W)
 
 
 
@@ -736,7 +828,7 @@ def resetCallback():
     robot.reset()
 
 reset = Button(leftFrame, text="RESET", width=10, command=resetCallback)
-reset.grid(row=29, column = 2)
+reset.grid(row=33, column = 2)
 #
 # #Output Values
 #
