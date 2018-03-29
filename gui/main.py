@@ -176,7 +176,7 @@ class Vehicle:
     def move_activeRect(self):
         if self.active:
             self.vehicle_updateRectangle()
-            canvas.after(10, self.move_activeRect) # time in terms of miliseconds
+            canvas.after(100, self.move_activeRect) # time in terms of miliseconds
 
     def vehicle_updateRectangle(self):
         delta_x = int(round(self.speedx))
@@ -213,23 +213,8 @@ class Vehicle:
         self.rect = [feettoPixels(width), feettoPixels(length), feettoPixels(width), feettoPixels(length), incline]
         self.speedx, self.speedy = self.processing(self.vd, thetaD, self.inclineAngle)
         self.inclineAngle = thetaD
-        # self.createRectanglePath(length, width, incline)
         self.move_activeRect()
 
-    # def createRectanglePath(self, length, width, incline):
-    #     #[X_CENTER + length * np.cos(np.pi/2. - incline), Y_CENTER - length * np.sin(np.pi/2. - incline)]
-    #     vertex = [[X_CENTER, Y_CENTER],
-    #               [X_CENTER, Y_CENTER + feettoPixels(length)],
-    #               [X_CENTER + feettoPixels(width), Y_CENTER + feettoPixels(length)],
-    #               [X_CENTER + feettoPixels(width), Y_CENTER]]
-    #     pos = canvas.coords(self.shape)                     #get the coordinates of the vehicle
-    #     self.ref_point = [(pos[0] + pos[4])/2, (pos[1] + pos[5])/2]
-    #
-    #     vertex = [[X_CENTER, Y_CENTER],
-    #               [X_CENTER + length * np.cos(np.pi/2. - incline), Y_CENTER - length * np.sin(np.pi/2. - incline)],
-    #               [X_CENTER + feettoPixels(width), Y_CENTER + feettoPixels(length)],
-    #               [X_CENTER + feettoPixels(width), Y_CENTER]]
-    #     self.path = canvas.create_polygon(vertex, fill="", outline="red", width=3)
 
 ####################### CIRCLE ###############################################
 

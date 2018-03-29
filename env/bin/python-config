@@ -1,4 +1,4 @@
-#!/Users/amagarwal/Documents/RoboticsMidterm/env/bin/python
+#!/Users/amagarwal/Documents/RoboticsMidterm/ENV/bin/python
 
 import sys
 import getopt
