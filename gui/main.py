@@ -58,6 +58,7 @@ class Vehicle:
         self.totalDist = 0
         self.waypoints = []
         self.path = None
+        self.time = 100
 
 
 ##################### HELPER FUNCTIONS #####################################
@@ -86,6 +87,9 @@ class Vehicle:
     def setTheta(self, theta):
         self.adjustHeadingAngle(theta)
 
+    def setTimeInterval(self, time):
+        self.time = time
+
 
     def setRelative(self):
         self.active = False
@@ -108,6 +112,7 @@ class Vehicle:
         self.totalDist = 0
         self.waypoints = []
         canvas.delete(self.path)
+        self.time = 100
 
     def processing(self, v_d, theta_d, omega):         #20 ms readings
 
@@ -163,6 +168,7 @@ class Vehicle:
         self.totalDist = 0
         self.waypoints = []
         canvas.delete(self.path)
+        self.time = 100
 
 ############################# RECTANGLE ########################################
 
@@ -230,7 +236,7 @@ class Vehicle:
     def move_activeCircle(self):
         if self.active:
             self.vehicle_updateCircle()
-            canvas.after(100, self.move_activeCircle) # time in terms of miliseconds
+            canvas.after(self.time, self.move_activeCircle) # time in terms of miliseconds
 
     def activateCircle(self):
         self.move_activeCircle()
@@ -271,7 +277,7 @@ class Vehicle:
     def move_activeFigure(self):
         if self.active:
             self.vehicle_updateFigure()
-            canvas.after(100, self.move_activeFigure) # time in terms of miliseconds
+            canvas.after(self.time, self.move_activeFigure) # time in terms of miliseconds
 
     def vehicle_updateFigure(self):
         delta_x = int(round(self.speedx))
@@ -291,6 +297,7 @@ class Vehicle:
             self.figIndex = 1 if self.figIndex == 0 else 0
             self.totalDist += 1
             self.vd = self.figure[self.figIndex] * (PI * 10.0 / 180.0)
+            # self.time = int(round(self.figure[self.figIndex] * 1000. / velocity))
             self.cicumference = 0
             self.speedx, self.speedy = self.processing(self.vd, self.inclineAngle, self.inclineAngle)
             self.relative = [self.ref_point[0], self.ref_point[1]]
@@ -318,10 +325,11 @@ class Vehicle:
         self.move_activeFigure()
 
 ############ POINT EXECUTION ##########################################
+
     def move_activePoint(self):
         if self.active:
             self.vehicle_updatePoints()
-            canvas.after(10, self.move_activePoint)
+            canvas.after(100, self.move_activePoint)
 
     def vehicle_updatePoints(self):
         delta_x = int(round(self.speedx))
@@ -341,9 +349,7 @@ class Vehicle:
             self.shape = canvas.create_polygon(VERTICES, fill=color)
             self.resetdist = deepcopy([normx, normy])
 
-
-        if normx >= self.dist[0] and normy >= self.dist[1]:
-
+        if np.linalg.norm([normx, normy]) >= np.linalg.norm(self.dist):
             self.totalDist += 1
             if self.totalDist == len(self.waypoints):
                 self.active = False
@@ -516,6 +522,14 @@ for k in range(NORM + 12, WIDTH + NORM, 12):
 
 robot = Vehicle(False)
 
+
+time = Text(leftFrame, width=30, height=1, takefocus=0)
+time.grid(row=8, column=3)
+time.insert(5.5, "Time For Paths (seconds) ")
+timeEnt = Entry(leftFrame, width=10)
+timeEnt.grid(row=8, column=4)
+
+
 #CATEGORIES
 #Circle
 
@@ -537,18 +551,26 @@ inclinInp.grid(row=2, column=1)
 
 def circleCallback():
     radiAns = float(radiInp.get()) if radiInp.get() != '' else 0.0
-    inclinAns = inclinInp.get() if inclinInp.get() != '' else 0.0
+    inclinAns = float(inclinInp.get()) if inclinInp.get() != '' else 0.0
+    timeAns = float(timeEnt.get()) if timeEnt.get() != '' else 0.0
 
-    radi = feettoPixels(radiAns)
+    cicumference = 2. * PI * radiAns
+    velocity = cicumference/timeAns
 
-    incline = np.radians(float(inclinAns))         # TODO: remove this before submitting
+    if velocity <= 15:
+        radi = feettoPixels(radiAns)
 
-    robot.setRelative()
-    robot.setVD(radi * (PI * 10.0 / 180.0))
-    robot.setMode('circle')
+        incline = np.radians(float(inclinAns))         # TODO: remove this before submitting
 
-    robot.setActive(True)
-    robot.moveCircle(radi, incline)
+        robot.setRelative()
+        robot.setVD(radi * (PI * 10.0 / 180.0))
+        robot.setMode('circle')
+        robot.setTimeInterval(int(round(radiAns * 100. / velocity)))
+
+        robot.setActive(True)
+        robot.moveCircle(radi, incline)
+    else:
+        print "TRY AGAIN CIRCLE"
 
 circleSubmit = Button(leftFrame, text="submit", width=10, command=circleCallback)
 circleSubmit.grid(row=3, column = 1)
@@ -581,14 +603,22 @@ def rectangleCallback():
     lengthAns = float(lengthInp.get())
     widthAns = float(widthInp.get())
     thetaAns = float(inclinInpRec.get()) if inclinInpRec.get() != '' else 0
+    timeAns = float(timeEnt.get()) if timeEnt.get() != '' else 0.0
 
     theta = np.radians(float(thetaAns))         # TODO: remove this before submitting
 
-    robot.setRelative()
-    robot.setMode('rectangle')
-    robot.createRectanglePath(lengthAns, widthAns, thetaAns)
-    robot.setActive(True)
-    robot.moveRectangle(lengthAns, widthAns, theta)
+    perim = 2. * lengthAns + 2. * widthAns
+    velocity = perim/timeAns
+
+    if velocity <= 15:
+        robot.setRelative()
+        robot.setMode('rectangle')
+        # robot.createRectanglePath(lengthAns, widthAns, thetaAns)
+        robot.setActive(True)
+        robot.setVD(velocity)
+        robot.moveRectangle(lengthAns, widthAns, theta)
+    else:
+        print "TRY AGAIN"
 
 
 rectangleSubmit = Button(leftFrame, text="submit", width=10, command=rectangleCallback)
@@ -619,21 +649,30 @@ inclinTopInp.grid(row=13, column=1)
 
 
 def figureCallback():
-    radiTopAns = radiTopInp.get()
-    radiBotAns = radiBotInp.get()
-    inclinTopAns = inclinTopInp.get() if inclinTopInp.get() != '' else 0
+    radiTopAns = float(radiTopInp.get())
+    radiBotAns = float(radiBotInp.get())
+    inclinTopAns = float(inclinTopInp.get()) if inclinTopInp.get() != '' else 0
+    timeAns = float(timeEnt.get()) if timeEnt.get() != '' else 0.0
 
     topRadi = feettoPixels(radiTopAns)
     bottomRadi = feettoPixels(radiBotAns)
 
-    inclineTop= np.radians(float(inclinTopAns))         # TODO: remove this before submitting
+    totalDist = (2. * PI * radiTopAns) + ( 2. * PI *  radiBotAns)
+    velocity = totalDist/timeAns
 
-    robot.setRelative()
-    robot.setMode('figure 8')
-    robot.setVD(topRadi * (PI * 10.0 / 180.0))
+    if velocity <= 15:
 
-    robot.setActive(True)
-    robot.moveFigure(topRadi, bottomRadi, inclineTop)
+        inclineTop= np.radians(float(inclinTopAns))         # TODO: remove this before submitting
+
+        robot.setRelative()
+        robot.setMode('figure 8')
+        robot.setVD(topRadi * (PI * 10.0 / 180.0))
+        robot.setTimeInterval(int(round(radiTopAns * 100. / velocity)))
+
+        robot.setActive(True)
+        robot.moveFigure(topRadi, bottomRadi, inclineTop)
+    else:
+        print "TRY AGAIN"
 
 
 figSubmit = Button(leftFrame, text="submit", width=10, command=figureCallback)
@@ -692,10 +731,9 @@ way4Inpy.grid(row=22, column=2)
 
 
 def pointCallback():
-    x_fAns = float(x_fInp.get()) if x_fInp.get() != '' else 0
-    y_fAns = float(y_fInp.get()) if y_fInp.get() != '' else 0
-
-
+    x_fAns = float(x_fInp.get()) if x_fInp.get() != '' else 0.
+    y_fAns = float(y_fInp.get()) if y_fInp.get() != '' else 0.
+    timeAns = float(timeEnt.get()) if timeEnt.get() != '' else 0.
 
     result = []
     if way1Inpx.get() != '' and way1Inpy.get() != ''\
@@ -717,10 +755,26 @@ def pointCallback():
     else:
         result.append([x_fAns, y_fAns])
 
-    robot.setRelative()
-    robot.setMode('Point')
-    robot.setActive(True)
-    robot.movePoints(result)
+    totalDist = 0
+    for index in range(0, len(result), 2):
+        if index + 1 < len(result):
+            totalDist += np.power(result[index][0] - result[index+1][0], 2) + np.power(result[index][1] - result[index + 1][1], 2)
+        else:
+            break
+    velocity = totalDist/timeAns
+
+    print "velocity ", velocity
+
+    if velocity <= 15:
+
+        robot.setRelative()
+        robot.setMode('Point')
+        robot.setVD(velocity)
+        robot.setActive(True)
+        robot.movePoints(result)
+
+    else:
+        print "TRY AGAIN"
 
 
 
@@ -807,21 +861,6 @@ def forwardKinematic():
 forwardSubmit = Button(leftFrame, text="submit", width=10, command=forwardKinematic)
 forwardSubmit.grid(row=33, column = 1, sticky = W)
 
-
-
-time = Text(leftFrame, width=50, height=1, takefocus=0)
-time.grid(row=35, column=0)
-time.insert(5.5, "Time taken from Start to End Points ")
-timeEnt = Entry(leftFrame, width=10)
-timeEnt.grid(row=35, column=1)
-
-def timeCallback():
-    timeAns = timeEnt.get()
-
-    # if
-
-reset = Button(leftFrame, text="submit", width=10, command=timeCallback)
-reset.grid(row=36, column = 1)
 
 def resetCallback():
     robot.reset()

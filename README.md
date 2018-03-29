@@ -37,9 +37,8 @@ To start the program, you will see 6 different options on which path the autonom
             twirling to the path. What you will see here is that the robot will not stay as clear on the path when that 
             field is added into the mix. Also note that the velocity of the vehicle must stay below 15ft/sec. No warning
             or error will show. The user will need to try another value less than or equal to the max. 
-        7. Lastly is the time taken from start to end points on any of the paths (except for the last 2). If the value 
-            inputed can not be completed in the time and error message will show. 
-   
+        
+        NOTE: The first four fields REQUIRE the time field to be filled out to determine the desired velocity of the robot.
    
    
 That should be it for now! Enjoy :)
