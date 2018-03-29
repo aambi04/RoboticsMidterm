@@ -2,361 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="75b7c324-1b10-48bb-926b-8eb34c1ed3fe" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/gui/__init__.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/build/init/init" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/build/init/out00-Analysis.toc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/build/init/out00-COLLECT.toc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/build/init/out00-EXE.toc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/build/init/out00-PKG.pkg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/build/init/out00-PKG.toc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/build/init/out00-PYZ.pyz" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/build/init/out00-PYZ.toc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/build/init/out00-Tree.toc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/build/init/out01-Tree.toc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/build/init/warninit.txt" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/build/init/xref-init.html" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/.Python" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_codecs_cn.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_codecs_hk.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_codecs_iso2022.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_codecs_jp.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_codecs_kr.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_codecs_tw.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_collections.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_ctypes.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_functools.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_hashlib.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_heapq.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_io.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_locale.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_multibytecodec.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_random.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_struct.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/_tkinter.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/array.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/binascii.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/bz2.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/cPickle.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/cStringIO.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/datetime.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/fcntl.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/init" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/itertools.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/math.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/operator.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/readline.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/resource.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/select.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/strop.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/auto.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/clock.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/ascii.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/big5.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp1250.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp1251.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp1252.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp1253.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp1254.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp1255.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp1256.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp1257.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp1258.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp437.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp737.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp775.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp850.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp852.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp855.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp857.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp860.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp861.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp862.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp863.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp864.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp865.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp866.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp869.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp874.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp932.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp936.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp949.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/cp950.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/dingbats.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/ebcdic.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/euc-cn.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/euc-jp.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/euc-kr.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/gb12345.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/gb1988.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/gb2312-raw.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/gb2312.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso2022-jp.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso2022-kr.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso2022.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso8859-1.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso8859-10.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso8859-13.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso8859-14.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso8859-15.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso8859-16.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso8859-2.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso8859-3.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso8859-4.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso8859-5.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso8859-6.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso8859-7.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso8859-8.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/iso8859-9.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/jis0201.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/jis0208.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/jis0212.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/koi8-r.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/koi8-u.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/ksc5601.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/macCentEuro.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/macCroatian.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/macCyrillic.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/macDingbats.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/macGreek.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/macIceland.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/macJapan.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/macRoman.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/macRomania.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/macThai.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/macTurkish.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/macUkraine.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/shiftjis.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/symbol.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/encoding/tis-620.enc" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/history.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/http1.0/http.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/http1.0/pkgIndex.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/init.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/af.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/af_za.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ar.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ar_in.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ar_jo.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ar_lb.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ar_sy.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/be.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/bg.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/bn.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/bn_in.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ca.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/cs.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/da.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/de.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/de_at.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/de_be.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/el.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/en_au.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/en_be.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/en_bw.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/en_ca.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/en_gb.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/en_hk.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/en_ie.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/en_in.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/en_nz.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/en_ph.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/en_sg.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/en_za.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/en_zw.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/eo.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_ar.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_bo.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_cl.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_co.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_cr.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_do.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_ec.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_gt.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_hn.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_mx.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_ni.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_pa.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_pe.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_pr.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_py.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_sv.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_uy.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/es_ve.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/et.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/eu.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/eu_es.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/fa.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/fa_in.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/fa_ir.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/fi.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/fo.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/fo_fo.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/fr.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/fr_be.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/fr_ca.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/fr_ch.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ga.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ga_ie.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/gl.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/gl_es.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/gv.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/gv_gb.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/he.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/hi.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/hi_in.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/hr.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/hu.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/id.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/id_id.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/is.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/it.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/it_ch.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ja.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/kl.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/kl_gl.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ko.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ko_kr.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/kok.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/kok_in.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/kw.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/kw_gb.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/lt.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/lv.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/mk.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/mr.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/mr_in.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ms.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ms_my.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/mt.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/nb.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/nl.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/nl_be.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/nn.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/pl.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/pt.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/pt_br.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ro.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ru.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ru_ua.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/sh.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/sk.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/sl.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/sq.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/sr.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/sv.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/sw.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ta.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/ta_in.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/te.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/te_in.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/th.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/tr.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/uk.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/vi.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/zh.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/zh_cn.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/zh_hk.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/zh_sg.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/msgs/zh_tw.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/opt0.4/optparse.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/opt0.4/pkgIndex.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/package.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/parray.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/safe.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/tclAppInit.c" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/tclDTrace.d" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/tclIndex" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/tm.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tcl/word.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/time.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/bgerror.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/button.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/choosedir.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/clrpick.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/comdlg.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/console.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/dialog.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/entry.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/focus.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/images/README" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/images/logo.eps" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/images/logo100.gif" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/images/logo64.gif" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/images/logoLarge.gif" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/images/logoMed.gif" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/images/pwrdLogo.eps" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/images/pwrdLogo100.gif" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/images/pwrdLogo150.gif" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/images/pwrdLogo175.gif" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/images/pwrdLogo200.gif" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/images/pwrdLogo75.gif" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/images/tai-ku.gif" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/listbox.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/menu.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/mkpsenc.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgbox.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgs/cs.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgs/da.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgs/de.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgs/el.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgs/en.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgs/en_gb.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgs/eo.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgs/es.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgs/fr.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgs/hu.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgs/it.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgs/nl.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgs/pl.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgs/pt.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgs/ru.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/msgs/sv.msg" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/obsolete.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/optMenu.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/palette.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/panedwindow.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/pkgIndex.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/safetk.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/scale.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/scrlbar.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/spinbox.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/tclIndex" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/tearoff.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/text.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/tk.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/tkAppInit.c" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/tkfbox.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/altTheme.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/aquaTheme.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/button.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/clamTheme.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/classicTheme.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/combobox.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/cursors.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/defaults.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/entry.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/fonts.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/menubutton.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/notebook.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/panedwindow.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/progress.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/scale.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/scrollbar.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/sizegrip.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/spinbox.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/treeview.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/ttk.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/utils.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/vistaTheme.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/winTheme.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/ttk/xpTheme.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/unsupported.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/tk/xmfbox.tcl" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/unicodedata.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/dist/init/zlib.so" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/gui/init.spec" afterPath="" />
       <change beforePath="$PROJECT_DIR$/gui/main.py" afterPath="$PROJECT_DIR$/gui/main.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -368,7 +13,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/RoboticsMidterm$test.coverage" NAME="test Coverage Results" MODIFIED="1522201950169" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gui" />
-    <SUITE FILE_PATH="coverage/RoboticsMidterm$main.coverage" NAME="main Coverage Results" MODIFIED="1522284695092" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gui" />
+    <SUITE FILE_PATH="coverage/RoboticsMidterm$main.coverage" NAME="main Coverage Results" MODIFIED="1522286354853" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gui" />
     <SUITE FILE_PATH="coverage/RoboticsMidterm$robots.coverage" NAME="robots Coverage Results" MODIFIED="1522192941212" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gui" />
     <SUITE FILE_PATH="coverage/RoboticsMidterm$init.coverage" NAME="init Coverage Results" MODIFIED="1519706081690" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/gui" />
   </component>
@@ -389,8 +34,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/gui/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1673">
-              <caret line="178" column="28" lean-forward="false" selection-start-line="178" selection-start-column="28" selection-end-line="178" selection-end-column="28" />
+            <state relative-caret-position="-1957">
+              <caret line="778" column="38" lean-forward="false" selection-start-line="778" selection-start-column="38" selection-end-line="778" selection-end-column="38" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -422,9 +67,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>create_rectang</find>
-      <find>self.ref_point</find>
-      <find>self.ref_point = [(pos[0] + pos[</find>
       <find>headingan</find>
       <find>position</find>
       <find>move_active</find>
@@ -442,7 +84,6 @@
       <find>x1</find>
       <find>rightFrame</find>
       <find>self.wheelRotation</find>
-      <find>print</find>
       <find>inclineAngle</find>
       <find>kinematic</find>
       <find>adjustHeadingAngle</find>
@@ -452,6 +93,10 @@
       <find>create</find>
       <find>waypoint</find>
       <find>moveFigure</find>
+      <find>Label</find>
+      <find>circleCall</find>
+      <find>refresh</find>
+      <find>print</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -1047,15 +692,16 @@
       <workItem from="1520297777851" duration="10423000" />
       <workItem from="1520458565696" duration="579000" />
       <workItem from="1521298482992" duration="54809000" />
-      <workItem from="1522171526535" duration="79966000" />
+      <workItem from="1522171526535" duration="81417000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="177536000" />
+    <option name="totallyTimeSpent" value="178987000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="986" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1069,7 +715,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32928476" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.092185594" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.092185594" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32961223" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1303,8 +949,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/gui/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1673">
-          <caret line="178" column="28" lean-forward="false" selection-start-line="178" selection-start-column="28" selection-end-line="178" selection-end-column="28" />
+        <state relative-caret-position="-1957">
+          <caret line="778" column="38" lean-forward="false" selection-start-line="778" selection-start-column="38" selection-end-line="778" selection-end-column="38" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>

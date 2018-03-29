@@ -454,7 +454,6 @@ class Vehicle:
     def setWheels(self, wheel1, wheel2, wheel3, wheel4):
         velocity = self.kinematic(wheel1, wheel2, wheel3, wheel4)
         self.wheelRotation = [wheel1, wheel2, wheel3, wheel4]
-        print "wheels", wheel1, wheel2, wheel3, wheel4
         self.speedx = -velocity[0]
         self.speedy = -velocity[1]
         self.headingAngle = velocity[2]
@@ -514,6 +513,10 @@ time.insert(5.5, "Time For Paths (seconds) ")
 timeEnt = Entry(leftFrame, width=10)
 timeEnt.grid(row=8, column=4)
 
+var = StringVar()
+warning = Label(leftFrame, width=50, height=1, textvariable= var, takefocus=0, bg="black", fg="white")
+warning.grid(row=6, column=3)
+
 
 #CATEGORIES
 #Circle
@@ -556,6 +559,7 @@ def circleCallback():
         robot.moveCircle(radi, incline)
     else:
         print "TRY AGAIN CIRCLE"
+        var.set("Velocity < 15ft/sec. Please Refresh")
 
 circleSubmit = Button(leftFrame, text="submit", width=10, command=circleCallback)
 circleSubmit.grid(row=3, column = 1)
@@ -604,6 +608,8 @@ def rectangleCallback():
         robot.moveRectangle(lengthAns, widthAns, theta)
     else:
         print "TRY AGAIN"
+
+        var.set("Velocity < 15ft/sec. Please Refresh")
 
 
 rectangleSubmit = Button(leftFrame, text="submit", width=10, command=rectangleCallback)
@@ -658,6 +664,7 @@ def figureCallback():
         robot.moveFigure(topRadi, bottomRadi, inclineTop)
     else:
         print "TRY AGAIN"
+        var.set("Velocity < 15ft/sec. Please Refresh")
 
 
 figSubmit = Button(leftFrame, text="submit", width=10, command=figureCallback)
@@ -748,8 +755,6 @@ def pointCallback():
             break
     velocity = totalDist/timeAns
 
-    print "velocity ", velocity
-
     if velocity <= 15:
 
         robot.setRelative()
@@ -760,6 +765,7 @@ def pointCallback():
 
     else:
         print "TRY AGAIN"
+        var.set("Velocity < 15ft/sec. Please Refresh")
 
 
 
@@ -849,6 +855,7 @@ forwardSubmit.grid(row=33, column = 1, sticky = W)
 
 def resetCallback():
     robot.reset()
+    var.set("Try Again :)")
 
 reset = Button(leftFrame, text="RESET", width=10, command=resetCallback)
 reset.grid(row=18, column = 3)
